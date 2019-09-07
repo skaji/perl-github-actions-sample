@@ -1,0 +1,32 @@
+name: linux
+
+on:
+  - push
+
+jobs:
+  perl:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version:
+          - '5.8'
+          - '5.10'
+          - '5.16'
+          - 'latest'
+
+    container:
+      image: perl:${{ matrix.version }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: perl -V
+        run: |
+          perl -V
+      - name: Install Dependencies
+        run: |
+          curl -sL https://git.io/cpm | perl - install -g
+      - name: Run Tests
+        run: |
+          prove -l t
