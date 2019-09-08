@@ -10,14 +10,14 @@ jobs:
 
     strategy:
       matrix:
-        version:
+        perl-version:
           - '5.8'
           - '5.10'
           - '5.16'
           - 'latest'
 
     container:
-      image: perl:${{ matrix.version }}
+      image: perl:${{ matrix.perl-version }}
 
     steps:
       - uses: actions/checkout@v1
