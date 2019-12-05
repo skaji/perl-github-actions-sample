@@ -1,0 +1,35 @@
+name: linux-cache
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  perl:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        perl-version:
+          - 'latest'
+
+    container:
+      image: perl:${{ matrix.perl-version }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: perl -V
+        run: perl -V
+      - uses: actions/cache@v1
+        with:
+          path: ~/.perl-cpm/builds
+          key: ${{ runner.os }}-builds
+      - name: Install Dist::Zilla
+        run: curl -sL https://git.io/cpm | perl - install -g --show-build-log-on-failure Dist::Zilla
+      - name: Dzil version
+        run: dzil --version
