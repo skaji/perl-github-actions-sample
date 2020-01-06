@@ -1,0 +1,15 @@
+name: linux-vendor-cpanm
+on: push
+jobs:
+  perl:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: perl -V
+      run: perl -V
+    - name: Install cpanm
+      run: curl -L http://cpanmin.us | perl - --sudo App::cpanminus
+    - name: Install Dependencies
+      run: cpanm --installdeps .
+    #- name: Run Tests
+    #  run: prove -l t

@@ -1,0 +1,17 @@
+name: linux-with-perl-setup
+on: push
+jobs:
+  perl:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.30'
+    - name: perl -V
+      run: perl -V
+    - name: Install Dependencies
+      run: curl -sL https://git.io/cpm | perl - install --global --show-build-log-on-failure --cpanfile=cpanfile
+    - name: Run Tests
+      run: prove -l t
