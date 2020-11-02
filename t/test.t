@@ -6,6 +6,7 @@ use Plack::Test;
 use HTTP::Request::Common;
 use Sample;
 
+#testing
 my $app = Sample->app;
 my $test = Plack::Test->create($app);
 
